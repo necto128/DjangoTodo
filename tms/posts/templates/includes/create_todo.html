@@ -1,0 +1,17 @@
+<form method="post" action="{% url 'posts:create' %}">
+    <div style="max-width: 500px">
+        <div class="mb-3">
+            <input type="number" class="form-control"  placeholder="user_id" name="user">
+        </div>
+        <div class="mb-3">
+                <textarea name="message" class="form-control" rows="3" placeholder="Message" value=""></textarea>
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="completed" name="completed" value="1">
+            <label class="form-check-label" for="completed">Completed</label>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
+        </div>
+    </div>
+</form>

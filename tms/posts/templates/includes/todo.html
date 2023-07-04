@@ -1,0 +1,11 @@
+<tr>
+    <td>{{todos.name}}</td>
+    <td>{{todos.id}}</td>
+    <td>{{todos.message}}</td>
+    {%  if not way in 'solo' %}
+        <td>
+            <a href="{% url 'posts:show_todo' pk=todos.id %}">go to....</a>
+        </td>
+    {% endif %}
+    <td><button class="btn" data-id="{{todos.id}}">{{todos.completed}}</button></td>
+</tr>

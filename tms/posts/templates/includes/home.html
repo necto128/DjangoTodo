@@ -1,0 +1,32 @@
+<h1>Hello from posts app!</h1>
+<table class="table">
+                <thead class="table-dark">
+                <tr>
+                            <th>user_name</th>
+                            <th>id</th>
+                            <th>title</th>
+                            {%  if not way in 'solo' %}<th>viewing</th>{% endif %}
+                            <th>completed</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for todos in objects %}
+                    {% include "includes/todo.html" %}
+              {% endfor %}
+              </tbody>
+</table>
+<div class="pagination">
+    <span class="step-links">
+        {% if objects.has_previous %}
+            <a href="?page=1">&laquo; первая</a>
+            <a href="?page={{ objects.previous_page_number }}">предыдущая</a>
+        {% endif %}
+
+        <span class="current-page">{{ objects.number }}</span>
+
+        {% if objects.has_next %}
+            <a href="?page={{ objects.next_page_number }}">следующая</a>
+            <a href="?page={{ objects.paginator.num_pages }}">последняя &raquo;</a>
+        {% endif %}
+    </span>
+</div>
