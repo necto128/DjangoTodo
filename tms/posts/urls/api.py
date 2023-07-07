@@ -7,4 +7,5 @@ urlpatterns = [
     path('posts/<int:pk>/delete', views_api.TodoDelete.as_view(), name="delete"),
     path('posts/<int:pk>', views_api.ShowTodo.as_view(), name="show_todo"),
     path('posts/<int:pk>/update', views_api.ShowTodo.as_view(), name="update"),
+    path('gtr', views_api.gtr, name="gtr"),
 ]

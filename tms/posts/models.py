@@ -9,12 +9,8 @@ class Todo(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(max_length=1000, name="message")
     completed = models.BooleanField(default=0)
-    subtask = models.ForeignKey('self', on_delete=models.CASCADE, null=True, related_name="subtasks")
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name="children")
 
     def __str__(self):
         return f"user_id: {self.user}, name: {self.name}, " \
-               f"description: {self.message}, completed: {self.completed}, subtask: {self.todos}"
-
-    def save(self, *args, **kwargs):
-        self.name = self.user.username
-        super().save(*args, **kwargs)
+               f"description: {self.message}, completed: {self.completed}, parent: {self.children}"

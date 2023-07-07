@@ -1,30 +1,34 @@
+import random
+import string
+import urllib.request
 from django.conf import settings
-from django.contrib.auth.models import User
-import requests
-
-from .models import Todo
-
-response = requests.get(settings.TODOS_URL)
 
 
-class ServicesTodo:
-    @staticmethod
-    def generate_record():
-        user_data = {
-            "user1": "pass1",
-            "user2": "pass2",
-            "user3": "pass3",
-            "user4": "pass4",
-            "user5": "pass5",
-            "user6": "pass6",
-            "user7": "pass7",
-            "user8": "pass8",
-            "user9": "pass9",
-            "user10": "pass10"
-        }
-        for k, v in user_data.items():
-            User(username=k, password=v).save()
-        if not Todo.objects.count():
-            for i in response.json():
-                Todo(user=User.objects.filter(id=i["userId"])[0], message=i["title"],
-                     completed=i["completed"]).save()
+def build_generator():
+    url = settings.TODOS_URL
+    response = urllib.request.urlopen(url)
+    data = response.read().decode('utf-8-sig')
+    text = data.lower().translate(str.maketrans("", "", string.punctuation))
+    words = text.split()
+
+    pairs = {}
+    for i in range(len(words) - 1):
+        pair = (words[i], words[i + 1])
+        if pair not in pairs:
+            pairs[pair] = []
+        if len(words) > i + 2:
+            pairs[pair].append(words[i + 2])
+    return pairs
+
+
+def generate_text(generator, length):
+    seed = random.choice(list(generator.keys()))
+    words = list(seed)
+    for i in range(length):
+        try:
+            next_word = random.choice(generator[seed])
+            words.append(next_word)
+            seed = (seed[1], next_word)
+        except KeyError:
+            break
+    return ' '.join(words)

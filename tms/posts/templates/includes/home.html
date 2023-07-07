@@ -1,20 +1,6 @@
-<h1>Hello from posts app!</h1>
-<table class="table">
-                <thead class="table-dark">
-                <tr>
-                            <th>user_name</th>
-                            <th>id</th>
-                            <th>title</th>
-                            {%  if not way in 'solo' %}<th>viewing</th>{% endif %}
-                            <th>completed</th>
-                </tr>
-              </thead>
-              <tbody>
-              {% for todos in objects %}
+{% for todos in objects %}
                     {% include "includes/todo.html" %}
-              {% endfor %}
-              </tbody>
-</table>
+{% endfor %}
 <div class="pagination">
     <span class="step-links">
         {% if objects.has_previous %}
@@ -30,3 +16,4 @@
         {% endif %}
     </span>
 </div>
+

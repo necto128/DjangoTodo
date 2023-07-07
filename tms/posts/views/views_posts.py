@@ -10,7 +10,7 @@ from ..models import Todo
 
 
 def home(request):
-    data = Paginator(Todo.objects.all(), 10).get_page(request.GET.get('page'))
+    data = Paginator(Todo.objects.prefetch_related().all(), 10).get_page(request.GET.get('page'))
     return render(request, 'todos.html', {'objects': data, "way": "home"})
 
 

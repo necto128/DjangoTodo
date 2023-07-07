@@ -1,3 +1,16 @@
-.pagination{
-    justify-content: center;
+.content {
+    margin: 30px;
+}
+
+.post-card {
+    margin-bottom: 20px;
+}
+
+.label {
+    margin: 5px;
+}
+
+.btn-row {
+    margin-right: 5px;
+    margin-left: 10px;
 }
