@@ -1,0 +1,19 @@
+<div class="col-sm-6">
+    <div class="card post-card">
+        <div class="card-body">
+            <h5 class="card-title">{{ todos.name }}
+                <span class="badge badge-danger" data-post-id="{{ todos.id }}" hidden>{{ todos.children|length }}</span>
+                <span class="badge badge-info">{{ todos.id }}</span>
+
+                <a href="#" class="btn btn-info" style="float: right;">Look</a>
+            </h5>
+            <p class="card-text">{{ todos.message }}</p>
+            <div style="display: -webkit-box;">
+            <a href="#" class="btn btn-primary">Update</a>
+            <form action="#" method="post"  style="margin-left: 347px">
+                <button class="btn btn-danger" type="submit" style="float: right;">Delete</button>
+            </form>
+                </div>
+        </div>
+    </div>
+</div>
