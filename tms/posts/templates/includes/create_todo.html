@@ -1,17 +1,36 @@
-<form method="post" action="{% url 'posts:create' %}">
-    <div style="max-width: 500px">
-        <div class="mb-3">
-            <input type="number" class="form-control"  placeholder="user_id" name="user">
+<div style="width: 700px;margin: 0 auto">
+    <form method="post" action="{% url "posts:create" %}">
+        {{ form.non_field_errors }}
+        {% csrf_token %}
+        {{ form.user }}
+        <div class="form-group">
+            {% if form.name.errors %}
+                <div class="alert alert-danger" role="alert">{{ form.name.errors }}</div>
+            {% endif %}
+            <label for="{{ form.name.label }}">{{ form.name.label }}:</label>
+            <input type="text" name="{{ form.name.name }}" class="form-control" id="{{ form.name.label }}" required>
         </div>
-        <div class="mb-3">
-                <textarea name="message" class="form-control" rows="3" placeholder="Message" value=""></textarea>
+        <div class="form-group">
+            {% if form.message.errors %}
+                <div class="alert alert-danger" role="alert">{{ form.message.errors }}</div>
+            {% endif %}
+            <label for="{{ form.message.label }}">{{ form.message.label }}:</label>
+            <textarea name="{{ form.message.name }}" class="form-control" id="{{ form.message.label }}"
+                      rows="3"></textarea>
         </div>
-        <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="completed" name="completed" value="1">
-            <label class="form-check-label" for="completed">Completed</label>
+        <div class="form-group">
+            {% if form.parent.errors %}
+                <div class="alert alert-danger" role="alert">{{ form.parent.errors }}</div>
+            {% endif %}
+            <label for="{{ form.parent.label }}">{{ form.parent.label }}:</label>
+            <select name="{{ form.parent.name }}" class="form-control" id="{{ form.parent.label }}">
+                {% for option in form.parent.field.choices %}
+                    <option value="{{ option.0 }}">{{ option.1 }}</option>
+                {% endfor %}
+            </select>
         </div>
         <div class="col-auto">
             <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
         </div>
-    </div>
-</form>
+    </form>
+</div>

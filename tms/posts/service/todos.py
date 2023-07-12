@@ -21,10 +21,3 @@ class ServicesTodo:
     @staticmethod
     def get_todo_by_name_partial(name):
         return Todo.objects.filter(name__contains=name)
-
-    # from django.db.models import Prefetch
-    # cc = Todo.objects.prefetch_related(Prefetch('todos', queryset=Todo.objects.all()))
-    # for todo in cc:
-    #     print(todo.id)
-    #     for child in todo.todos.all():
-    #         print('--', child.id)
