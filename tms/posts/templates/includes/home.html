@@ -1,0 +1,37 @@
+{% if not objects %}
+    <div class="container text-center" style="margin-top: 25px">
+        <div class="row">
+            <div class="col">
+                <a class="nav-link">Search for: {{search}}</a>
+                <a class="nav-link">nothing was found in the search</a>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% for todos in objects %}
+    {% if way == "solo" and todos.parent == null %}
+        {% include "includes/todo.html" %}
+    {% else %}
+        {% include "includes/todo.html" %}
+    {% endif %}
+{% endfor %}
+
+{% if not way == 'solo' %}
+    <div class="bottom-block">
+    <span class="step-links">
+        {% if objects.has_previous %}
+            <a href="?page=1">&laquo; первая</a>
+            <a href="?page={{ objects.previous_page_number }}">предыдущая</a>
+        {% endif %}
+
+        <span class="current-page">{{ objects.number }}</span>
+
+        {% if objects.has_next %}
+            <a href="?page={{ objects.next_page_number }}">следующая</a>
+            <a href="?page={{ objects.paginator.num_pages }}">последняя &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+{% endif %}
+
+
