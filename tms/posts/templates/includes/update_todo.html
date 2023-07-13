@@ -19,7 +19,7 @@
                   rows="3">{{ form.instance.message }}</textarea>
     </div>
     <div class="col-auto">
-        <div class="form-check form-switch" style="margin-left: 10px;">
+        <div class="form-check form-switch block-mr-l-10">
             <input class="form-check-input complete-checkbox" type="checkbox" role="switch"
                    href-data="{% url "posts:update" pk=form.instance.id %}" name="completed"
                    id="SwitchCheck_{{ form.instance.id }}" {% if form.instance.completed %}checked{% endif %}>

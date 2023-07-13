@@ -1,7 +1,7 @@
 <div class="col-sm-{% if way == 'solo' %}15{% else %}6{% endif %}" id="id_todo_{{ todos.id }}">
-    <div class="card post-card" style="height: 215px {% if way == 'solo' %}; width: 1000px{% endif %}">
-        <div class="card-body" style="display: grid; grid-template-rows: 1fr auto;">
-            <h5 class="card-header" style="max-height: 100px;">{{ todos.name | truncatechars:30}}
+    <div class="card post-card block-2 {% if way == 'solo' %};block-2-2{% endif %}">
+        <div class="card-body block-grid">
+            <h5 class="card-header block-2-3">{{ todos.name | truncatechars:30}}
                 {% if not way == "solo" %}
                     <a href="{% url 'posts:show_todo' pk=todos.id %}" class="btn btn-info">Look</a>
                 {% endif %}
@@ -9,10 +9,10 @@
                 <span class="badge badge-info">Subtask: {{ todos.children.all|length }}</span>
             </h5>
             <p class="card-text">{{ todos.message | truncatechars:55 }}</p>
-            <div style="display: flex;">
-                <div style="flex: 2; display: flex">
+            <div class="block-flex">
+                <div class="block-flex-2">
                     <a href="{% url "posts:update" pk=todos.id %}" class="btn btn-primary">Update</a>
-                    <div class="form-check form-switch" style="margin-left: 10px;">
+                    <div class="form-check form-switch block-mr-l-10">
                         <input class="form-check-input complete-checkbox" type="checkbox" role="switch"
                                href-data="{% url "posts:update" pk=todos.id %}"
                                id="SwitchCheck_{{ todos.id }}" {% if todos.completed %}checked{% endif %}>
@@ -20,9 +20,9 @@
                                for="flexSwitchCheckDefault">Complete</label>
                     </div>
                 </div>
-                <div style="flex: 1;">
-                    <button class="btn btn-danger btn-delete" href-data="{% url 'posts:delete' pk=todos.id %}"
-                            data-id="{{ todos.id }}" type="submit" style="float: right;">Delete
+                <div class="block-fx-1">
+                    <button class="btn btn-danger btn-delete txt-ft-r" href-data="{% url 'posts:delete' pk=todos.id %}"
+                            data-id="{{ todos.id }}" type="submit">Delete
                     </button>
                 </div>
             </div>
@@ -32,25 +32,24 @@
         <div class="container">
             <div class="row cols-2">
                 {% for todo in todos.children.all %}
-                    <div class="col" style="flex-grow: 0">
-                        <div class="card post-card" style="width: 450px;">
+                    <div class="col block-2-fx-gw-0">
+                        <div class="card post-card block-2-w">
                             <div class="card-body">
                                 <h5 class="card-title">{{ todo.name }}
                                     <span class="badge badge-info">{{ todo.children.all|length }}</span>
                                     {% if not way == "solo" %}
-                                        <a href="{% url 'posts:show_todo' pk=todo.id %}" class="btn btn-info"
-                                           style="float: right;">Look</a>
+                                        <a href="{% url 'posts:show_todo' pk=todo.id %}" class="btn btn-info txt-ft-r">Look</a>
                                     {% endif %}
                                 </h5>
                                 <p class="card-text">{{ todo.message }}</p>
-                                <div style="display: flex;">
-                                    <div style="flex: 1;">
+                                <div class="block-flex">
+                                    <div class="block-fx-1">
                                         <a href="{% ur; "posts:update" pk=todo.id %}" class="btn btn-primary">Update</a>
                                     </div>
-                                    <div style="flex: 1;">
-                                        <button class="btn btn-danger btn-delete"
+                                    <div class="block-fx-1">
+                                        <button class="btn btn-danger btn-delete txt-ft-r"
                                                 href-data="{% url 'posts:delete' pk=todos.id %}"
-                                                data-id="{{ todos.id }}" type="submit" style="float: right;">Delete
+                                                data-id="{{ todos.id }}" type="submit">Delete
                                         </button>
                                     </div>
                                 </div>

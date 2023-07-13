@@ -1,4 +1,4 @@
-<div style="width: 700px;margin: 0 auto">
+<div class="block-1">
     <form method="post" action="{% url "posts:create" %}">
         {{ form.non_field_errors }}
         {% csrf_token %}

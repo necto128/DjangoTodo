@@ -1,14 +1,14 @@
-<div style="width: 700px;margin: 0 auto">
+<div class="block-1">
     <form method="post" action="{% url "posts:create" %}">
-        {{ form.non_field_errors }}
         {% csrf_token %}
         {{ form.user }}
+        {{ form.non_field_errors }}
         <div class="form-group">
-            {% if form.name.errors %}
-                <div class="alert alert-danger" role="alert">{{ form.name.errors }}</div>
+            <div class="alert alert-danger" role="alert">{{ form.name.errors }}</div>
             {% endif %}
             <label for="{{ form.name.label }}">{{ form.name.label }}:</label>
             <input type="text" name="{{ form.name.name }}" class="form-control" id="{{ form.name.label }}" required>
+            {% if form.name.errors %}
         </div>
         <div class="form-group">
             {% if form.message.errors %}

@@ -16,7 +16,7 @@
             aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" style="margin-left: 10px" id="navbarTogglerDemo01">
+    <div class="collapse navbar-collapse block-mr-l-10" id="navbarTogglerDemo01">
         <a class="navbar-brand" href="{% url 'posts:home' %}">Home</a>
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
@@ -32,7 +32,7 @@
 </nav>
 
 <div class="container">
-    <div class="row content" style="padding-top: 92px">
+    <div class="row content block-0-p-t">
         {% block content %}{% endblock %}
     </div>
 </div>
