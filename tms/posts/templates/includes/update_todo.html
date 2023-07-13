@@ -1,0 +1,32 @@
+<form method="post" action="{% url "posts:update" pk=form.instance.id %}">
+    {{ form.non_field_errors }}
+    {% csrf_token %}
+    {{ form.user }}
+    <div class="form-group">
+        {% if form.name.errors %}
+            <div class="alert alert-danger" role="alert">{{ form.name.errors }}</div>
+        {% endif %}
+        <label for="{{ form.name.label }}">{{ form.name.label }}:</label>
+        <input type="text" name="name" class="form-control" id="{{ form.name.label }}" value="{{ form.instance.name }}"
+               required>
+    </div>
+    <div class="form-group">
+        {% if form.message.errors %}
+            <div class="alert alert-danger" role="alert">{{ form.message.errors }}</div>
+        {% endif %}
+        <label for="{{ form.message.label }}">{{ form.message.label }}:</label>
+        <textarea name="{{ form.message.name }}" class="form-control" id="{{ form.message.label }}"
+                  rows="3">{{ form.instance.message }}</textarea>
+    </div>
+    <div class="col-auto">
+        <div class="form-check form-switch block-mr-l-10">
+            <input class="form-check-input complete-checkbox" type="checkbox" role="switch"
+                   href-data="{% url "posts:update" pk=form.instance.id %}" name="completed"
+                   id="SwitchCheck_{{ form.instance.id }}" {% if form.instance.completed %}checked{% endif %}>
+            <label class="form-check-label er-axios-{{ form.instance.id }}"
+                   for="flexSwitchCheckDefault">Complete</label>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
+    </div>
+    </div>
+</form>

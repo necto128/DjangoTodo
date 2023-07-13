@@ -11,7 +11,7 @@ from ..models import Todo
 
 class Home(View):
     def get(self, request):
-        data = Paginator(Todo.objects.all(), 10).get_page(request.GET.get('page'))
+        data = Paginator(Todo.objects.select_related().filter(parent=None), 10).get_page(request.GET.get('page'))
         return JsonResponse({"todo": [model_to_dict(todo) for todo in data]})
 
     def post(self, request):

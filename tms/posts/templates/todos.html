@@ -5,7 +5,8 @@
         {% include "includes/create_todo.html" %}
     {% elif way in 'home,solo' %}
         {% include "includes/home.html" %}
+    {% elif way in 'update' %}
+        {% include "includes/update_todo.html" %}
     {% endif %}
 {% endblock %}
-
 

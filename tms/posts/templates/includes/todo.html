@@ -1,19 +1,63 @@
-<div class="col-sm-6">
-    <div class="card post-card">
-        <div class="card-body">
-            <h5 class="card-title">{{ todos.name }}
-                <span class="badge badge-danger" data-post-id="{{ todos.id }}" hidden>{{ todos.children|length }}</span>
-                <span class="badge badge-info">{{ todos.id }}</span>
-
-                <a href="#" class="btn btn-info" style="float: right;">Look</a>
+<div class="col-sm-{% if way == 'solo' %}15{% else %}6{% endif %}" id="id_todo_{{ todos.id }}">
+    <div class="card post-card block-2 {% if way == 'solo' %};block-2-2{% endif %}">
+        <div class="card-body block-grid">
+            <h5 class="card-header block-2-3">{{ todos.name | truncatechars:30}}
+                {% if not way == "solo" %}
+                    <a href="{% url 'posts:show_todo' pk=todos.id %}" class="btn btn-info">Look</a>
+                {% endif %}
+                </br>
+                <span class="badge badge-info">Subtask: {{ todos.children.all|length }}</span>
             </h5>
-            <p class="card-text">{{ todos.message }}</p>
-            <div style="display: -webkit-box;">
-            <a href="#" class="btn btn-primary">Update</a>
-            <form action="#" method="post"  style="margin-left: 347px">
-                <button class="btn btn-danger" type="submit" style="float: right;">Delete</button>
-            </form>
+            <p class="card-text">{{ todos.message | truncatechars:55 }}</p>
+            <div class="block-flex">
+                <div class="block-flex-2">
+                    <a href="{% url "posts:update" pk=todos.id %}" class="btn btn-primary">Update</a>
+                    <div class="form-check form-switch block-mr-l-10">
+                        <input class="form-check-input complete-checkbox" type="checkbox" role="switch"
+                               href-data="{% url "posts:update" pk=todos.id %}"
+                               id="SwitchCheck_{{ todos.id }}" {% if todos.completed %}checked{% endif %}>
+                        <label class="form-check-label er-axios-{{ todos.id }}"
+                               for="flexSwitchCheckDefault">Complete</label>
+                    </div>
                 </div>
+                <div class="block-fx-1">
+                    <button class="btn btn-danger btn-delete txt-ft-r" href-data="{% url 'posts:delete' pk=todos.id %}"
+                            data-id="{{ todos.id }}" type="submit">Delete
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
+    {% if way == 'solo' %}
+        <div class="container">
+            <div class="row cols-2">
+                {% for todo in todos.children.all %}
+                    <div class="col block-2-fx-gw-0">
+                        <div class="card post-card block-2-w">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ todo.name }}
+                                    <span class="badge badge-info">{{ todo.children.all|length }}</span>
+                                    {% if not way == "solo" %}
+                                        <a href="{% url 'posts:show_todo' pk=todo.id %}" class="btn btn-info txt-ft-r">Look</a>
+                                    {% endif %}
+                                </h5>
+                                <p class="card-text">{{ todo.message }}</p>
+                                <div class="block-flex">
+                                    <div class="block-fx-1">
+                                        <a href="{% ur; "posts:update" pk=todo.id %}" class="btn btn-primary">Update</a>
+                                    </div>
+                                    <div class="block-fx-1">
+                                        <button class="btn btn-danger btn-delete txt-ft-r"
+                                                href-data="{% url 'posts:delete' pk=todos.id %}"
+                                                data-id="{{ todos.id }}" type="submit">Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
 </div>

@@ -14,3 +14,74 @@
     margin-right: 5px;
     margin-left: 10px;
 }
+
+.bottom-block {
+    text-align: center;
+    bottom: 0;
+    width: 100%;
+    background-color: #f1f1f1;
+    padding: 20px;
+}
+
+.fixed-top {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+
+.block-1 {
+    width: 700px;
+    margin: 0 auto;
+}
+
+.block-2 {
+    height: 215px
+}
+
+.block-2-2 {
+    width: 1000px
+}
+
+.block-grid {
+    display: grid;
+    grid-template-rows: 1fr auto;
+}
+
+.block-2-3 {
+    max-height: 100px;
+}
+
+.block-flex {
+    display: flex;
+}
+
+.block-flex-2 {
+    display: flex;
+    flex: 2;
+}
+
+.block-mr-l-10 {
+    margin-left: 10px;
+}
+
+.block-fx-1 {
+    flex: 1;
+}
+
+.txt-ft-r {
+    float: right;
+}
+
+.block-2-fx-gw-0 {
+    flex-grow: 0
+}
+
+.block-2-w {
+    width: 450px;
+}
+
+.block-0-p-t {
+    padding-top: 92px
+}
