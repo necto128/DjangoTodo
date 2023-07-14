@@ -4,8 +4,8 @@ import requests
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from .models import Todo
-from .utils import build_generator, generate_text
+from posts.models import Todo
+from posts.utils import build_generator, generate_text
 
 response = requests.get(settings.TODOS_URL)
 
