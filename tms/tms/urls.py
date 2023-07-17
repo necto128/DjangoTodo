@@ -16,10 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('posts/', include(('posts.urls.posts', 'posts'))),
     path('api/', include(('posts.urls.api', 'api'))),
     path('api/v2/', include('posts.urls.api_v2')),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
 ]
+
+handler404 = 'posts.views.views_posts.handling_404'

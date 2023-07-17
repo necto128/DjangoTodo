@@ -1,4 +1,4 @@
-from ..models import Todo
+from posts.models import Todo
 
 
 class ServicesTodo:
