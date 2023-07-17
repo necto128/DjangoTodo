@@ -6,8 +6,8 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.views import View
 
-from ..form.todo_form import TodoForm, TodoUpdateForm
-from ..models import Todo
+from posts.form.todo_form import TodoForm, TodoUpdateForm
+from posts.models import Todo
 
 
 class Home(View):

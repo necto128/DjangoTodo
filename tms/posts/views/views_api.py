@@ -5,8 +5,8 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views import View
 
-from ..form.todo_form import TodoForm, TodoUpdateForm
-from ..models import Todo
+from posts.form.todo_form import TodoForm, TodoUpdateForm
+from posts.models import Todo
 
 
 class Home(View):
