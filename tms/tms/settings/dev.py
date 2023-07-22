@@ -6,7 +6,8 @@ TERMS_OF_SERVICE = os.environ.get('TERMS_OF_SERVICE')
 
 INSTALLED_APPS = [
                      'debug_toolbar',
-                     'drf_yasg'
+                     'drf_yasg',
+                     'django_extensions'
                  ] + INSTALLED_APPS
 
 MIDDLEWARE = [

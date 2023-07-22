@@ -17,7 +17,7 @@ from rest_framework import status
 
 from posts.form.todo_form import TodoForm, TodoUpdateForm, UserForm
 from posts.models import Todo
-
+from posts.tasks import logging_task
 
 class Login(View):
     permission_classes = [permissions.AllowAny]

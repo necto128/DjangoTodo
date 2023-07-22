@@ -9,11 +9,11 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
 import os
 from datetime import timedelta
 from pathlib import Path
 
+from celery.schedules import crontab
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -164,3 +164,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CELERY_BROKER_URL = os.environ.get('CELERY_URL')
+CELERY_RESULT_BACKEND = os.environ.get('CELERY_URL')
+
+CELERY_BEAT_SCHEDULE = {
+    'traceback_todo': {
+        'task': 'posts.tasks.todo_for_day',
+        'schedule': crontab(minute=50, hour=23),
+    },
+}
