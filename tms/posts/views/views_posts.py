@@ -10,7 +10,9 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.views import View
+from django.views.decorators.cache import cache_page
 from rest_framework import permissions
 from rest_framework import status
 
@@ -49,6 +51,7 @@ class Registration(View):
         return render(request, 'todos.html', {"way": "auth", "construct": "registration", "form": user})
 
 
+@cache_page(60 * 120)
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('posts:login'))
@@ -125,5 +128,6 @@ class TodoUpdate(LoginRequiredMixin, View):
             return HttpResponse({'status': 204, 'errors': form_todo.errors})
 
 
+@cache_page(60 * 120)
 def handling_404(request, exception):
     return render(request, '404.html', {})
