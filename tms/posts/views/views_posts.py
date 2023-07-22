@@ -10,7 +10,6 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.cache import cache_page
 from rest_framework import permissions
@@ -63,20 +62,21 @@ class Home(LoginRequiredMixin, View):
 
     def get(self, request):
         data = Paginator(
-            Todo.objects.prefetch_related("parent", "children").filter(parent__isnull=True, user=request.user),
+            Todo.objects.prefetch_related("parent", "children").filter(parent__isnull=True, user=request.user,
+                                                                       is_delete=False),
             10).get_page(request.GET.get('page'))
         return render(request, 'todos.html', {'objects': data, "way": "home"})
 
     def post(self, request):
         name, todos = request.POST['name'], []
         if name:
-            todos = Todo.objects.filter(name__startswith=name, user=request.user)
+            todos = Todo.objects.filter(name__startswith=name, user=request.user, is_delete=False)
         return render(request, 'todos.html', {'objects': todos, "way": "home", "search": name})
 
 
 @login_required(login_url="posts:login")
 def show_todo(request, pk: int):
-    todo = Todo.objects.prefetch_related("parent", "children").filter(id=pk, user=request.user)
+    todo = Todo.objects.prefetch_related("parent", "children").filter(id=pk, user=request.user, is_delete=False)
     if todo.count():
         return render(request, 'todos.html', {'objects': todo, "way": "solo"})
     return HttpResponse(request, status=status.HTTP_404_NOT_FOUND)
@@ -104,7 +104,9 @@ class TodoDelete(LoginRequiredMixin, View):
 
     def post(self, request, pk: int) -> HttpResponse:
         try:
-            Todo.objects.get(id=pk, user=request.user).delete()
+            todo = Todo.objects.get(id=pk, user=request.user)
+            todo.is_delete = True
+            todo.save()
         except Exception:
             return JsonResponse({"status": 404})
         return JsonResponse({"status": 200})
@@ -115,7 +117,7 @@ class TodoUpdate(LoginRequiredMixin, View):
     login_url = "posts:login"
 
     def get(self, request, pk):
-        form = TodoUpdateForm(instance=get_object_or_404(Todo, id=pk))
+        form = TodoUpdateForm(instance=get_object_or_404(Todo, id=pk, is_delete=False))
         return render(request, 'todos.html', {"way": "update", "form": form})
 
     def post(self, request, pk):

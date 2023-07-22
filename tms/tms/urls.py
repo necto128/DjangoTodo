@@ -17,9 +17,25 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
+)
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Posts API Documentation",
+        default_version="v1",
+        description="API documentation for social network app",
+        terms_of_service=settings.TERMS_OF_SERVICE,
+        contact=openapi.Contact(email=settings.CONTACT_EMAIL),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=(permissions.IsAuthenticated,),
 )
 
 urlpatterns = [
@@ -29,7 +45,8 @@ urlpatterns = [
     path('api/v2/', include('posts.urls.api_v2')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
 
 handler404 = 'posts.views.views_posts.handling_404'

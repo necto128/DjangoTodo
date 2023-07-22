@@ -9,7 +9,8 @@ class Todo(models.Model):
     description = models.TextField(max_length=1000, name="message")
     completed = models.BooleanField(default=0)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name="children")
+    is_delete = models.BooleanField(default=0)
 
     def __str__(self):
         return f"user_id: {self.user}, name: {self.name}, " \
-               f"description: {self.message}, completed: {self.completed}, parent: {self.children}"
+               f"description: {self.message}, completed: {self.completed}, parent: {self.children}, is_delete: {self.is_delete}"
