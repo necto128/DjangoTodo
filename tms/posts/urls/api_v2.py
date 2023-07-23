@@ -1,12 +1,13 @@
 from django.urls import path, include
 from rest_framework import routers
 
-from posts.views import views_api_v2
+from posts.views.views_api_v2 import TodoViewSet, UserRegistrationAPIView
 
 router = routers.DefaultRouter()
-router.register('post', views_api_v2.TodoViewSet)
+router.register('post', TodoViewSet, basename='post')
+
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('register/', views_api_v2.UserRegistrationAPIView.as_view())
+    path('register/', UserRegistrationAPIView.as_view(), name='register')
 ]

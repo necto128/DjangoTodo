@@ -12,7 +12,7 @@ response = requests.get(settings.TODOS_URL)
 
 class ServicesTodo:
     @staticmethod
-    def generate_record():
+    def generate_record() -> None:
         users = [
             User.objects.create_user(
                 username="Petr",

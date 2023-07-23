@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-
+import datetime
 from posts.models import Todo
 
 
@@ -33,6 +33,13 @@ class TodoUpdateForm(TodoForm):
         cleaned_data['name'] = cleaned_data.get('name') or self.instance.name
         cleaned_data['message'] = cleaned_data.get('message') or self.instance.message
 
+    def save(self, commit=True):
+        todo_instance = super().save(commit=False)
+        if 'completed' in self.changed_data and self.cleaned_data.get('completed'):
+            todo_instance.update_at = datetime.datetime.now()
+        if commit:
+            todo_instance.save()
+        return todo_instance
 
 class UserForm(forms.ModelForm):
     username = forms.CharField(min_length=6)
