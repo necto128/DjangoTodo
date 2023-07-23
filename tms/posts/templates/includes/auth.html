@@ -1,0 +1,62 @@
+{% if construct in "login" %}
+    <div class="text-center cnt">
+        <main class="form-signin">
+            <form action="{% url "posts:login" %}" method="post">
+                {% csrf_token %}
+                <img class="mb-4"
+                     src="https://static.vecteezy.com/system/resources/previews/000/495/435/original/id-card-line-black-icon-vector.jpg"
+                     alt="" width="100" height="100">
+                <h1 class="h3 mb-3 fw-normal">Пожалуйста, войдите</h1>
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Логин" name="username">
+                    <label for="floatingInput">Логин</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                           name="password">
+                    <label for="floatingPassword">Пароль</label>
+                </div>
+                <div class="mt-4">
+                    <button class="w-100 btn btn-lg btn-primary" type="submit" id="btnSub">Вход</button>
+                    <div class="mt-4">
+                        <a class="w-100 btn btn-lg btn-primary bc-g"
+                           href="{% url "posts:registration" %}">Регистрация</a>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </div>
+{% elif construct in "registration" %}
+    <main class="form-signin cnt">
+        <form action="{% url "posts:registration" %}" method="post">
+            <img class="mb-4 im-c-f"
+                 src="https://thumbs.dreamstime.com/b/значок-карточки-id-стиль-плана-119821550.jpg"
+                 alt="" width="100" height="100">{% csrf_token %}
+            <h1 class="h3 mb-3 fw-normal">Регистрация</h1>
+            <div class="form-floating mb-2">
+                <input type="text" class="form-control" id="floatingInput1" placeholder="login name"
+                       name="username">
+                <label for="floatingInput1">Логин</label>
+                {{ form.username.errors }}
+            </div>
+            <div class="form-floating mb-2">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+                       name="email">
+                <label for="floatingInput">Адрес эл. почты</label>
+                {{ form.email.errors }}
+            </div>
+            <div class="form-floating mb-2">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                       name="password">
+                <label for="floatingPassword">Пароль</label>
+            </div>
+
+            <div class="mt-4">
+                <button class="w-100 btn btn-lg btn-primary" type="submit" id="btnSub">Регистрация</button>
+                <div class="mt-4">
+                    <a class="w-100 btn btn-lg btn-primary bc-g" href="{% url "posts:login" %}">Вход</a>
+                </div>
+            </div>
+        </form>
+    </main>
+{% endif %}

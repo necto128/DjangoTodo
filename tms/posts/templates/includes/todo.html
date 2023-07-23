@@ -6,7 +6,7 @@
                     <a href="{% url 'posts:show_todo' pk=todos.id %}" class="btn btn-info">Look</a>
                 {% endif %}
                 </br>
-                <span class="badge badge-info">Subtask: {{ todos.children.all|length }}</span>
+             <span class="badge badge-info">Subtask:{{ todos.children.all|length }} </span>
             </h5>
             <p class="card-text">{{ todos.message | truncatechars:55 }}</p>
             <div class="block-flex">
@@ -36,7 +36,6 @@
                         <div class="card post-card block-2-w">
                             <div class="card-body">
                                 <h5 class="card-title">{{ todo.name }}
-                                    <span class="badge badge-info">{{ todo.children.all|length }}</span>
                                     {% if not way == "solo" %}
                                         <a href="{% url 'posts:show_todo' pk=todo.id %}" class="btn btn-info txt-ft-r">Look</a>
                                     {% endif %}
@@ -44,7 +43,7 @@
                                 <p class="card-text">{{ todo.message }}</p>
                                 <div class="block-flex">
                                     <div class="block-fx-1">
-                                        <a href="{% ur; "posts:update" pk=todo.id %}" class="btn btn-primary">Update</a>
+                                        <a href="{% url "posts:update" pk=todo.id %}" class="btn btn-primary">Update</a>
                                     </div>
                                     <div class="block-fx-1">
                                         <button class="btn btn-danger btn-delete txt-ft-r"

@@ -10,3 +10,11 @@ class TodoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Todo
         fields = ["id", "user", "name", "message", "completed", "parent", "children"]
+
+
+class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'password', "is_active"]

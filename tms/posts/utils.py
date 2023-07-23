@@ -5,7 +5,7 @@ import urllib.request
 from django.conf import settings
 
 
-def build_generator():
+def build_generator() -> dict:
     url = settings.TODOS_URL
     response = urllib.request.urlopen(url)
     data = response.read().decode('utf-8-sig')
@@ -22,7 +22,7 @@ def build_generator():
     return pairs
 
 
-def generate_text(generator, length):
+def generate_text(generator: dict, length: int) -> str:
     seed = random.choice(list(generator.keys()))
     words = list(seed)
     for i in range(length):

@@ -7,6 +7,8 @@
         {% include "includes/home.html" %}
     {% elif way in 'update' %}
         {% include "includes/update_todo.html" %}
+    {% elif way in 'auth' %}
+        {% include "includes/auth.html" %}
     {% endif %}
 {% endblock %}
 
