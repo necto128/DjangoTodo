@@ -6,6 +6,12 @@
     margin-bottom: 20px;
 }
 
+
+.log {
+    width: 30px;
+    height: 30px;
+}
+
 .label {
     margin: 5px;
 }
@@ -83,5 +89,19 @@
 }
 
 .block-0-p-t {
-    padding-top: 92px
+    padding-top: 92px;
+}
+
+.cnt{
+    width: 450px;
+    margin: 0 auto;
+}
+
+.im-c-f{
+    margin: 0 auto;
+    display: flex;
+}
+
+.u-c{
+    color: white!important;
 }

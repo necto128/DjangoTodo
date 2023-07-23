@@ -27,17 +27,17 @@ class UserRegistrationAPIView(APIView):
     Retrieve, create a user instance.
     """
 
-    def get_permissions(self):
+    def get_permissions(self) -> permissions:
         if self.request.method == 'PUT':
             return [permissions.AllowAny()]
         return [permissions.IsAuthenticated()]
 
-    def get(self, request):
+    def get(self, request) -> Response:
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
 
-    def put(self, request):
+    def put(self, request) -> Response:
         serializer = UserSerializer(data=request.data)
 
         if serializer.is_valid():
