@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.http import HttpRequest
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework import viewsets, permissions, filters
@@ -32,12 +33,12 @@ class UserRegistrationAPIView(APIView):
             return [permissions.AllowAny()]
         return [permissions.IsAuthenticated()]
 
-    def get(self, request) -> Response:
+    def get(self, request: HttpRequest) -> Response:
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
 
-    def put(self, request) -> Response:
+    def put(self, request: HttpRequest) -> Response:
         serializer = UserSerializer(data=request.data)
 
         if serializer.is_valid():

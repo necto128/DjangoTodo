@@ -1,6 +1,8 @@
+import datetime
+
 from django import forms
 from django.contrib.auth.models import User
-import datetime
+
 from posts.models import Todo
 
 
@@ -40,6 +42,7 @@ class TodoUpdateForm(TodoForm):
         if commit:
             todo_instance.save()
         return todo_instance
+
 
 class UserForm(forms.ModelForm):
     username = forms.CharField(min_length=6)

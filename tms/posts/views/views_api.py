@@ -1,55 +1,56 @@
 from django.core.paginator import Paginator
 from django.forms import model_to_dict
+from django.http import HttpRequest, JsonResponse
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.views import View
-from rest_framework import permissions
+from rest_framework import status
 
 from posts.form.todo_form import TodoForm, TodoUpdateForm
 from posts.models import Todo
 
 
 class Home(View):
-    permission_classes = [permissions.IsAuthenticated]
-    login_url = "posts:login"
-
-    def get(self, request) -> HttpResponse:
+    def get(self, request: HttpRequest) -> JsonResponse:
         data = Paginator(
-            Todo.objects.prefetch_related("parent", "children").filter(parent__isnull=True, user=request.user),
-            10).get_page(request.GET.get('page'))
-        return HttpResponse({"todo": [model_to_dict(todo) for todo in data]})
+            Todo.objects.prefetch_related("parent", "children").filter(parent__isnull=True), 10).get_page(
+            request.GET.get('page'))
+        return JsonResponse({"todo": [model_to_dict(todo) for todo in data]})
 
-    def post(self, request) -> HttpResponse:
+    def post(self, request) -> JsonResponse:
         todo = TodoForm(request.POST)
         if todo.is_valid():
-            return HttpResponse({"todo_create": model_to_dict(todo.save())})
+            return JsonResponse({"todo_create": model_to_dict(todo.save())})
         else:
-            return HttpResponse({'status': 204, 'errors': todo.errors})
+            return JsonResponse({'status': status.HTTP_204_NO_CONTENT, 'errors': todo.errors})
 
 
 class ShowTodo(View):
-    permission_classes = [permissions.IsAuthenticated]
-    login_url = "posts:login"
 
-    def get(self, request, pk: int) -> HttpResponse:
-        return HttpResponse({"todo": model_to_dict(Todo.objects.get(id=pk))})
+    def get(self, request: HttpRequest, pk: int) -> JsonResponse:
+        try:
+            todo = Todo.objects.get(id=pk)
+        except Exception:
+            return JsonResponse(status=status.HTTP_404_NOT_FOUND, data={})
+        return JsonResponse({"todo": model_to_dict(todo)})
 
-    def post(self, request, pk: int) -> HttpResponse:
-        todo = get_object_or_404(Todo, id=pk)
+    def post(self, request: HttpRequest, pk: int) -> HttpResponse:
+        try:
+            todo = Todo.objects.get(id=pk)
+        except Exception:
+            return JsonResponse(status=status.HTTP_404_NOT_FOUND, data={})
         form_todo = TodoUpdateForm(request.POST, instance=todo)
         if form_todo.is_valid():
-            return HttpResponse({'status': 200, "todo_update": model_to_dict(form_todo.save())})
+            return JsonResponse(status=status.HTTP_200_OK, data={"todo_update": model_to_dict(form_todo.save())})
         else:
-            return HttpResponse({'status': 204, 'errors': form_todo.errors})
+            return JsonResponse(status=status.HTTP_204_NO_CONTENT, data={'errors': form_todo.errors})
 
 
 class TodoDelete(View):
-    permission_classes = [permissions.IsAuthenticated]
-    login_url = "posts:login"
 
-    def delete(self, request, pk: int) -> HttpResponse:
+    def delete(self, request: HttpRequest, pk: int) -> HttpResponse:
         try:
-            Todo.objects.get(id=pk, user=request.user).delete()
+            Todo.objects.get(id=pk).delete()
         except Exception:
-            return HttpResponse({"status": 404})
-        return HttpResponse({"status": 200})
+            return JsonResponse(status=status.HTTP_405_METHOD_NOT_ALLOWED, data={})
+        return JsonResponse(status=status.HTTP_200_OK, data={})
