@@ -1,4 +1,5 @@
 from django.contrib.auth import logout, authenticate, login
+from django.http import HttpRequest
 from django.shortcuts import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.shortcuts import render
@@ -13,10 +14,10 @@ from posts.form.todo_form import UserForm
 class Login(View):
     permission_classes = [permissions.AllowAny]
 
-    def get(self, request):
+    def get(self, request: HttpRequest) -> render:
         return render(request, 'todos.html', {"way": "auth", "construct": "login"})
 
-    def post(self, request):
+    def post(self, request: HttpRequest) -> redirect:
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
@@ -30,10 +31,10 @@ class Login(View):
 class Registration(View):
     permission_classes = [permissions.AllowAny]
 
-    def get(self, request):
+    def get(self, request: HttpRequest) -> render:
         return render(request, 'todos.html', {"way": "auth", "construct": "registration"})
 
-    def post(self, request):
+    def post(self, request: HttpRequest) -> render:
         user = UserForm(request.POST)
         if user.is_valid():
             user.save()
@@ -42,6 +43,6 @@ class Registration(View):
 
 
 @cache_page(60 * 120)
-def logout_view(request):
+def logout_view(request: HttpRequest):
     logout(request)
     return HttpResponseRedirect(reverse('posts:login'))
